@@ -1,2 +1,4 @@
 :queues:
   - [default, 1]
+  
+:concurrency: 2
