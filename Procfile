@@ -1,4 +1,4 @@
 web:		bundle exec rails server -p $PORT
-worker:	bundle exec sidekiq
+worker:	env TERM_CHILD=1 bundle exec rake resque:work QUEUE='*'
 clock:	bundle exec clockwork lib/clock.rb
-redis:	bundle exec redis-server
+redis:	redis-server

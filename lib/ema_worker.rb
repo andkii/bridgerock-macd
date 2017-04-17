@@ -1,6 +1,6 @@
-class MarketPointWorker
-  include Sidekiq::Worker
-  def perform
+class EMAWorker
+  @queue = :mp_queue
+  def self.perform(pair)
     # raw = RestClient.get('http://www.google.com/finance/info?client=ig&q=INDEXDJX:.DJI', :accept => :json)
     # data = JSON.parse raw.gsub(%r{^//}, '')
     # MarketPoint.create(value: data.first['l'])
@@ -12,7 +12,7 @@ class MarketPointWorker
     @@s.write 'login JHd0TxrtMKykqOn91fMwNqsk2Wrc5uhk2kQaTXJp2zMd1JTT'
     @response = JSON.parse(@@s.gets)
     
-    @@s.write 'subscribe USD-CAD'
+    @@s.write "subscribe #{pair}"
     @quote = JSON.parse(@@s.gets)["quote"]
     @pair = @quote["pair"]
     @price = @quote["data"]["last"]

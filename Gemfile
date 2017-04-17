@@ -10,8 +10,8 @@ gem 'sass-rails',   '5.0.6'
 gem 'coffee-script'
 gem 'jquery-rails', '4.1.1'
 gem 'clockwork'
-gem 'sidekiq'
-gem 'rest-client'
+gem 'resque'
+gem 'resque-web', require: 'resque_web'
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
