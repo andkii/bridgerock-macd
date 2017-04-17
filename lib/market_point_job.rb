@@ -10,6 +10,12 @@ class MarketPointJob
      
     @@s.write 'login JHd0TxrtMKykqOn91fMwNqsk2Wrc5uhk2kQaTXJp2zMd1JTT'
     @response = JSON.parse(@@s.gets)
-    MarketPoint.create(value: @response)
+    
+    @@s.write 'subscribe USD-CAD'
+    @quote = JSON.parse(@@s.gets)["quote"]
+    @pair = @quote["pair"]
+    @price = @quote["data"]["last"]
+    
+    MarketPoint.create(value: @price, currency: @pair)
   end
 end

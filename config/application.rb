@@ -22,5 +22,6 @@ module Workspace
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_job.queue_adapter = :delayed_job
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

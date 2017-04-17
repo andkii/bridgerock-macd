@@ -28,7 +28,8 @@ ActiveRecord::Schema.define(version: 20170416220334) do
   end
 
   create_table "market_points", force: :cascade do |t|
-    t.string   "value"
+    t.decimal  "value"
+    t.string   "currency"
     t.datetime "created_at"
   end
 
