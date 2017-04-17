@@ -44,6 +44,10 @@ GEM
     clockwork (2.0.2)
       activesupport
       tzinfo
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     daemons (1.2.4)
     debug_inspector (0.0.2)
@@ -163,6 +167,7 @@ PLATFORMS
 DEPENDENCIES
   byebug (= 9.0.0)
   clockwork
+  coffee-script
   daemons
   delayed_job_active_record
   foreman
