@@ -10,7 +10,7 @@ gem 'sass-rails',   '5.0.6'
 gem 'coffee-script'
 gem 'jquery-rails', '4.1.1'
 gem 'clockwork'
-gem 'delayed_job_active_record'
+gem 'sidekiq'
 gem 'rest-client'
 
 group :development, :test do
