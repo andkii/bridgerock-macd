@@ -54,6 +54,8 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-  root 'application#hello'
+  root 'session#index'
+  get '/session/start' => 'session#start'
+  resources :session
   
 end
