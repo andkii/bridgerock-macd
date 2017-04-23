@@ -1,21 +1,21 @@
 class SessionController < ApplicationController
-	
-  def start
-    require 'socket'
-    require 'json'
-     
-    @@s = TCPSocket.new 'practice.bridgerocktech.com', 80
-     
-    @@s.write 'login JHd0TxrtMKykqOn91fMwNqsk2Wrc5uhk2kQaTXJp2zMd1JTT'
-    @response = JSON.parse(@@s.gets)
-
-    @@s.write 'subscribe USD-CAD'
-    @response = JSON.parse(@@s.gets)
-    
-  end
 
 	def index
-    @points = MarketPoint.all.order(created_at: :desc)
-  end
-	
+
+		@eurusd_points = MarketPoint.where(currency: CurrencyPair::EURUSD)
+																.order(created_at: :desc)
+																
+		@usdcad_points = MarketPoint.where(currency: CurrencyPair::USDCAD)
+																.order(created_at: :desc)
+																
+		@usdjpy_points = MarketPoint.where(currency: CurrencyPair::USDJPY)
+																.order(created_at: :desc)
+																
+		@audusd_points = MarketPoint.where(currency: CurrencyPair::AUDUSD)
+																.order(created_at: :desc)
+
+		@usdcad_ema12 = EmaEntry.where(currency: CurrencyPair::USDCAD, period: 12).last
+		@usdcad_ema26 = EmaEntry.where(currency: CurrencyPair::USDCAD, period: 26).last
+	end
+
 end

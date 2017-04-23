@@ -55,13 +55,6 @@ Rails.application.routes.draw do
   #   end
   
   root 'session#index'
-  get '/session/start' => 'session#start'
   resources :session
-  
-  require "resque_web"
-
-  Workspace::Application.routes.draw do
-    mount ResqueWeb::Engine => "/resque_web"
-  end
 
 end

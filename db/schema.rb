@@ -10,21 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416220334) do
+ActiveRecord::Schema.define(version: 20170423043535) do
 
-  create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+  create_table "ema_entries", force: :cascade do |t|
+    t.decimal  "value"
+    t.string   "currency"
+    t.integer  "period"
     t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "macd_entries", force: :cascade do |t|
+    t.decimal  "value"
+    t.string   "currency"
+    t.integer  "period_1"
+    t.integer  "period_2"
+    t.datetime "created_at"
   end
 
   create_table "market_points", force: :cascade do |t|

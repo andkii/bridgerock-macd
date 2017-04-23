@@ -21,7 +21,10 @@ module Workspace
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_job.queue_adapter = :resque
+    config.active_job.queue_adapter = :sidekiq
     config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths += ["#{config.root}/app/workers"]
+    
+    config.logger = Logger.new(STDOUT)
   end
 end

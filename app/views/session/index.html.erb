@@ -1,5 +1,32 @@
 <h1>Ticker Data</h1>
 
-<% @points.each do |m| %>
-	<ul><%= m %></ul>
-<% end %>
+<table>
+    <tr>
+        <td>
+            <span>
+            
+            <%= @usdcad_ema12%>
+            <%= @usdcad_ema26%>
+            
+            <% @usdcad_points.each do |m| %>
+            	<ul><%= m %></ul>
+            <% end %>
+            </span>
+        </td>
+        <td>
+            <% @usdjpy_points.each do |m| %>
+            	<ul><%= m %></ul>
+            <% end %>    
+        </td>
+        <td>
+            <% @eurusd_points.each do |m| %>
+            	<ul><%= m %></ul>
+            <% end %>    
+        </td>
+        <td>
+            <% @audusd_points.each do |m| %>
+            	<ul><%= m %></ul>
+            <% end %>    
+        </td>
+    </tr>
+</table>
