@@ -1,3 +1,7 @@
+#YahooMPWorker class
+#Market point worker for pulling historical data from Yahoo Finance
+#Used when bridgerock practice server is down
+
 class YahooMPWorker
 	include Sidekiq::Worker
   def perform
@@ -25,13 +29,7 @@ class YahooMPWorker
       date = d['Date']
       close = BigDecimal(d['Close'])
       MarketPoint.create(value: close, currency: CurrencyPair::USDCAD, created_at: date)
-      update_technicals(CurrencyPair::USDCAD, close)
+      TechnicalsHelper::update_all_technicals(CurrencyPair::USDCAD, close)
     end
-  end
-  
-  def update_technicals(currency, close)
-    TechnicalsHelper::updateEma(currency, close, 12)
-    TechnicalsHelper::updateEma(currency, close, 26)
-    TechnicalsHelper::updateMacd(currency, close, 12, 26) 
   end
 end

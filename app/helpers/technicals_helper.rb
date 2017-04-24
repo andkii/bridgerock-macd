@@ -1,5 +1,9 @@
+#TechnicalsHelper
+#Helper module for doing technicals calculations
+
 module TechnicalsHelper
 	
+	#Updates all the technicals available for the given currency
 	def self.update_all_technicals(currency, close)
   	updateEma(currency, close, 12)
   	updateEma(currency, close, 26)
@@ -7,13 +11,13 @@ module TechnicalsHelper
   	updateMacdSignal(currency, 12, 26, 9)
 	end
 	
+	#Updates the EMA for the given currency and period
+	#If no previous EMA, attempt to initialize
 	def self.updateEma(pair, last, period)
-		
 		@ema = EmaEntry.where(currency: pair, period: period).last
 		
 		if @ema.nil?
 			initEma(pair, period)
-			
 		else
 			Rails.logger.debug "Updating Ema"
 			multiplier = 2.0/(1+period)
@@ -25,9 +29,9 @@ module TechnicalsHelper
 											period: period, 
 											created_at: DateTime.now)
 		end
-			
 	end
 	
+	#Attempt to initialize the EMA for the given currency
 	def self.initEma(pair, period)
 		
 		Rails.logger.debug "Attempting to initialize #{pair} EMA"
@@ -50,13 +54,7 @@ module TechnicalsHelper
 		
 	end
 	
-	def self.initMacd(pair, period_1, period_2)
-		
-		#TODO check if EmaEntries are valid...
-		#result = ema_1.value - ema_2.value
-		#Rails.logger.debug result
-	end
-
+	#Update the MACD for the given currency and EMA periods
 	def self.updateMacd(pair, last, period_1, period_2)
 		
 		ema_1 = EmaEntry.where(currency: pair, period: period_1).last
@@ -74,6 +72,9 @@ module TechnicalsHelper
 		end
 	end
 
+	#Update the MACD signal value,
+	#Or attempt to initialize the MACD signal if it does not yet exist
+	
 	def self.updateMacdSignal(pair, period_1, period_2, signal_period)
 		
 		@macd_last_with_signal = MacdEntry.where(currency: pair, 
@@ -102,6 +103,8 @@ module TechnicalsHelper
 									created_at: DateTime.now)
 		end
 	end
+	
+	#Initialize the MACD Signal
 	
 	def self.initMacdSignal(pair, period_1, period_2, signal_period)
 		@macd = MacdEntry.where(currency: pair, 

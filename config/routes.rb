@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   
   root 'session#index'
   get 'get_macd/:currency' => 'session#get_macd'
+  get 'get_macd/' => 'session#get_macd'
   resources :session
 
 end

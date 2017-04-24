@@ -1,3 +1,5 @@
+#CurrencyPair constants
+
 module CurrencyPair
 	USDCAD = "USD-CAD"
 	AUDUSD = "AUD-USD"

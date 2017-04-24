@@ -1,3 +1,6 @@
+#MarketPointWorker class
+#Worker for grabbing market point data from the Bridgerock practice server
+
 require 'socket'
 require 'json'
 
@@ -6,7 +9,8 @@ class MarketPointWorker
 	sidekiq_options :retry => false
 	@@conn_obj = nil
 	
-	
+	#Returns an existing connection to the Bridgerock practice server or
+	#creates a new one if it does not exist
 	def get_connection
 		return @@conn_obj if !@@conn_obj.nil?
 		
@@ -20,6 +24,8 @@ class MarketPointWorker
 		return @@conn_obj
 	end
 	
+	#Get the connection and subscribe to a currency pair
+	#Create a new market data point and update technicals
 	def perform(pair)
 
 			socket = get_connection

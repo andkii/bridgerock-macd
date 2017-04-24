@@ -1,7 +1,6 @@
 class SessionController < ApplicationController
 
 	def index
-
 		@eurusd_points = MarketPoint.where(currency: CurrencyPair::EURUSD).order(created_at: :desc).first(12)
 		@usdcad_points = MarketPoint.where(currency: CurrencyPair::USDCAD).order(created_at: :desc).first(12)
 		@usdjpy_points = MarketPoint.where(currency: CurrencyPair::USDJPY).order(created_at: :desc).first(12)
@@ -25,15 +24,32 @@ class SessionController < ApplicationController
 	end
 	
 	def get_macd
-	
-		c = params[:currency]
-	
-		macd = MacdEntry.where(currency: c, period_1: 12, period_2: 26, signal_period: 9).last
-		if macd.nil?
-			json.set! :error, "#{c} MACD not available"
-			render json: macd, content_type: 'application/json'
+		currency = params[:currency]
+		
+		if currency.nil?
+			response = {:error => "expected a currency in the form of {from}-{to}"}
+			render json: response, content_type: 'application/json'
+		end
+		return
+		valid_currency = false
+		CurrencyPair.constants.each do |c|
+	  	if currency.casecmp(CurrencyPair.const_get(c)) == 0 
+	  		valid_currency = true
+	  		break
+	  	end
+		end
+		
+		if valid_currency
+			macd = MacdEntry.where(currency: currency, period_1: 12, period_2: 26, signal_period: 9).last
+			if macd.nil?
+				response = {:error => "#{currency} MACD is not available"}
+				render json: response, content_type: 'application/json'
+			else
+				render json: macd, content_type: 'application/json'	
+			end
 		else
-			render json: macd, content_type: 'application/json'	
+			response = {:error => "#{currency} is not a valid currency"}
+			render json: response, content_type: 'application/json'
 		end
 	end
 
