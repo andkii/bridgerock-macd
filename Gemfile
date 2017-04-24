@@ -9,9 +9,8 @@ gem 'turbolinks'
 gem 'sass-rails',   '5.0.6'
 gem 'coffee-script'
 gem 'jquery-rails', '4.1.1'
-gem 'clockwork'
 gem 'sidekiq'
-gem 'sidekiq-cron'
+gem 'sidekiq-scheduler'
 gem 'rest-client'
 
 group :development, :test do

@@ -3,6 +3,7 @@ require 'json'
 
 class MarketPointWorker
 	include Sidekiq::Worker
+	sidekiq_options :retry => false
 	@@conn_obj = nil
 	
 	
@@ -21,23 +22,28 @@ class MarketPointWorker
 	
 	def perform(pair)
 
-			@socket = get_connection
-			@pair = pair
+			socket = get_connection
 			
-			Rails.logger.debug "Retrieving #{@pair} exchange rate..."
+			Rails.logger.debug "Retrieving #{pair} exchange rate..."
 			
-			@socket.write "subscribe #{@pair}"
-			@quote = ConnectionHelper::expect_response(@socket)
-			if !@quote
+			socket.write "subscribe #{pair}"
+			quote = ConnectionHelper::expect_response(socket)
+			socket.write "unsubscribe #{pair}"
+			if !quote
 				Rails.logger.debug "#{self.class}: Terminating worker"
 				return
 			end
 			
-			@pair = @quote["pair"]
-			@price = @quote["data"]["last"]
+			quote = quote["quote"]
+			price = quote["data"]["last"]
 			
-			@s.write "unsubscribe #{@pair}"
+			if quote["pair"] != pair
+				Rails.logger.debug "Quote mismatch! Expected #{pair}, got #{quote["pair"]}"
+			else
+				MarketPoint.create(value: price, currency: pair)
+				TechnicalsHelper::update_all_technicals(pair, price)
+			end
 			
-			MarketPoint.create(value: @price, currency: @pair)
 	end
+	
 end

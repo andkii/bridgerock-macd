@@ -1,0 +1,25 @@
+:schedule:
+
+  market_worker_USDCAD:
+    every: ['1m', first_in: '10s']
+    class: MarketPointWorker
+    args: ["USD-CAD"]
+    description: "Market Worker for USDCAD"
+    
+  market_worker_USDJPY:
+    every: ['1m', first_in: '25s']
+    class: MarketPointWorker
+    args: ["USD-JPY"]
+    description: "Market Worker for USDJPY"
+    
+  market_worker_EURUSD:
+    every: ['1m', first_in: '40s']
+    class: MarketPointWorker
+    args: ["EUR-USD"]
+    description: "Market Worker for EURUSD"
+    
+  market_worker_AUDUSD:
+    every: ['1m', first_in: '55s']
+    class: MarketPointWorker
+    args: ["AUD-USD"]
+    description: "Market Worker for AUDUSD"

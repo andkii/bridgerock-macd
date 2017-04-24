@@ -3,10 +3,25 @@
 <table>
     <tr>
         <td>
+            <ul>USD-CAD</ul>
+        </td>
+        <td>
+            <ul>USD-JPY</ul>
+        </td>
+        <td>
+            <ul>EUR-USD</ul>
+        </td>
+        <td>
+            <ul>AUD-USD</ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
             <span>
             
-            <%= @usdcad_ema12%>
-            <%= @usdcad_ema26%>
+            <ul><%= @usdcad_ema12%></ul>
+            <ul><%= @usdcad_ema26%></ul>
+            <ul><%= @usdcad_macd%></ul>
             
             <% @usdcad_points.each do |m| %>
             	<ul><%= m %></ul>
@@ -14,16 +29,25 @@
             </span>
         </td>
         <td>
+            <ul><%= @usdjpy_ema12%></ul>
+            <ul><%= @usdjpy_ema26%></ul>
+            <ul><%= @usdjpy_macd%></ul>
             <% @usdjpy_points.each do |m| %>
             	<ul><%= m %></ul>
             <% end %>    
         </td>
         <td>
+            <ul><%= @eurusd_ema12%></ul>
+            <ul><%= @eurusd_ema26%></ul>
+            <ul><%= @eurusd_macd%></ul>
             <% @eurusd_points.each do |m| %>
             	<ul><%= m %></ul>
             <% end %>    
         </td>
         <td>
+            <ul><%= @audusd_ema12%></ul>
+            <ul><%= @audusd_ema26%></ul>
+            <ul><%= @audusd_macd%></ul>
             <% @audusd_points.each do |m| %>
             	<ul><%= m %></ul>
             <% end %>    
