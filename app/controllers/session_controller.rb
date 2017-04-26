@@ -24,16 +24,17 @@ class SessionController < ApplicationController
 	end
 	
 	def get_macd
-		currency = params[:currency]
+		currency = params[:currency].upcase
 		
 		if currency.nil?
 			response = {:error => "expected a currency in the form of {from}-{to}"}
 			render json: response, content_type: 'application/json'
+			return
 		end
-		return
+
 		valid_currency = false
 		CurrencyPair.constants.each do |c|
-	  	if currency.casecmp(CurrencyPair.const_get(c)) == 0 
+	  	if currency == CurrencyPair.const_get(c)
 	  		valid_currency = true
 	  		break
 	  	end

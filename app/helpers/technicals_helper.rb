@@ -23,7 +23,7 @@ module TechnicalsHelper
 			multiplier = 2.0/(1+period)
 
 			new_ema = multiplier*(last - @ema.value) + @ema.value
-			Rails.logger.debug "Close: #{last} Mult: #{multiplier} PrevEMA: #{@ema.value} NewEMA: #{new_ema}"
+
 			EmaEntry.create(value: new_ema, 
 											currency: pair, 
 											period: period, 
